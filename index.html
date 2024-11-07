@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>سجل العملاء</title>
+</head>
+<body>
+    <button id="search-client-btn">ابحث عن عميل</button>
+    <div id="search-area" style="display: none;">
+        <input type="text" id="client-search" placeholder="ادخل اسم العميل">
+        <button onclick="searchClient()">ابحث</button>
+        <button onclick="showAddClientForm()">+</button>
+    </div>
+    
+    <div id="add-client-form" style="display: none;">
+        <h3>إضافة عميل جديد</h3>
+        <label>هل العميل أول مرة يسوق؟</label><br>
+        <select id="first-time">
+            <option value="yes">نعم</option>
+            <option value="no">لا</option>
+        </select>
+        <button onclick="showTrainingForm()">استمرار</button>
+    </div>
+
+    <div id="training-form" style="display: none;">
+        <h3 id="training-title">تفاصيل التدريب</h3>
+        <label for="session-number">اختر رقم الحصة:</label>
+        <select id="session-number" onchange="showSkills()">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <!-- أضف بقية الحصص حتى 13 -->
+            <option value="13">13</option>
+        </select>
+        
+        <div id="skills-area">
+            <!-- سيتم عرض المهارات هنا بناءً على رقم الحصة -->
+        </div>
+
+        <label>ملاحظات:</label><br>
+        <textarea id="notes" rows="4" cols="50" placeholder="أدخل ملاحظاتك هنا..."></textarea><br>
+    </div>
+
+    <script>
+        document.getElementById("search-client-btn").onclick = function() {
+            document.getElementById("search-area").style.display = "block";
+        };
+        
+        function showAddClientForm() {
+            document.getElementById("add-client-form").style.display = "block";
+        }
+
+        function showTrainingForm() {
+            let isFirstTime = document.getElementById("first-time").value;
+            document.getElementById("training-form").style.display = "block";
+            document.getElementById("training-title").innerText = isFirstTime === "yes" ? "نموذج أكاديمية ياسر يحيى لأول مرة" : "نموذج التقييم";
+            showSkills(); // عرض المهارات الافتراضية للحصة الأولى
+        }
+
+        function showSkills() {
+            let sessionNumber = document.getElementById("session-number").value;
+            let skillsArea = document.getElementById("skills-area");
+            skillsArea.innerHTML = ""; // إعادة تعيين المحتوى
+            
+            // إضافة المهارات بناءً على رقم الحصة
+            if (sessionNumber == "1") {
+                skillsArea.innerHTML = "<p>المهارات: الفحص، التهدئة، التحكم، الانطلاق</p>";
+            } else if (sessionNumber == "2") {
+                skillsArea.innerHTML = "<p>المهارات: استخدام الإشارات، الالتفاف يمين ويسار، التوجيه</p>";
+            } else if (sessionNumber == "3") {
+                skillsArea.innerHTML = "<p>المهارات: التقدير، القيادة في الشوارع الضيقة، الأمان</p>";
+            } 
+            // أضف باقي الحصص حسب التفاصيل التي تريدها
+        }
+
+        function searchClient() {
+            let clientName = document.getElementById("client-search").value;
+            alert("بحث عن العميل: " + clientName);
+            // يمكنك تطوير كود البحث هنا
+        }
+    </script>
+</body>
+</html>
